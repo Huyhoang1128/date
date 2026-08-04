@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}{{ config.your_name }} muốn hỏi {{ config.girl_name }} một điều...{% endblock %}
+
+{% block content %}
+<div class="card center">
+  <h1 class="title"> {{ config.your_name }} có một điều muốn hỏi {{ config.girl_name }}...</h1>
+  <p class="question">{{ config.question }}</p>
+
+  <div class="buttons">
+    <a href="{{ url_for('step2') }}" id="btn-yes" class="btn btn-yes">Có</a>
+    <button type="button" id="btn-no" class="btn btn-no">Không</button>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/dodge.js') }}"></script>
+{% endblock %}

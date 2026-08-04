@@ -1,0 +1,186 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fbc2eb 100%);
+  overflow-x: hidden;
+}
+
+#fx-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.page {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 24px;
+  padding: 40px 32px;
+  max-width: 480px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(219, 39, 119, 0.25);
+  text-align: center;
+  animation: pop-in 0.4s ease-out;
+}
+
+@keyframes pop-in {
+  from { transform: scale(0.85); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.title {
+  font-size: 1.5rem;
+  color: #be185d;
+  margin-bottom: 8px;
+}
+
+.question {
+  font-size: 1.1rem;
+  color: #6b21a8;
+  margin-bottom: 24px;
+}
+
+.buttons {
+  position: relative;
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  min-height: 60px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 14px 28px;
+  border-radius: 999px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.15s ease;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+}
+
+.btn-yes {
+  background: linear-gradient(135deg, #f472b6, #db2777);
+  color: white;
+}
+
+.btn-no {
+  background: #f3f4f6;
+  color: #6b7280;
+  position: relative;
+}
+
+#btn-no.dodging {
+  position: fixed;
+  transition: top 0.15s ease, left 0.15s ease;
+}
+
+.btn-wide {
+  width: 100%;
+  margin-top: 12px;
+}
+
+.option-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.option-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 16px 8px;
+  border: 2px solid #fbcfe8;
+  border-radius: 16px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  color: #831843;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.option-card:has(input:checked) {
+  border-color: #db2777;
+  background: #fdf2f8;
+}
+
+.option-card input {
+  accent-color: #db2777;
+}
+
+.option-card-emoji .emoji {
+  font-size: 1.6rem;
+}
+
+.datetime-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.datetime-input {
+  padding: 14px 16px;
+  border: 2px solid #fbcfe8;
+  border-radius: 16px;
+  font-size: 1rem;
+  color: #831843;
+  background: #fdf2f8;
+}
+
+.datetime-input:focus {
+  outline: none;
+  border-color: #db2777;
+}
+
+.summary {
+  background: #fdf2f8;
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 16px;
+  text-align: left;
+  color: #831843;
+}
+
+.thanks {
+  color: #be185d;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+#music-toggle {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  z-index: 3;
+  border: none;
+  border-radius: 999px;
+  width: 48px;
+  height: 48px;
+  font-size: 1.3rem;
+  background: white;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+}

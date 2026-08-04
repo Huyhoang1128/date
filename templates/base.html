@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Lời mời hẹn hò{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <canvas id="fx-canvas"></canvas>
+
+  <div class="page">
+    {% block content %}{% endblock %}
+  </div>
+
+  <audio id="bg-music" src="{{ url_for('static', filename='audio/love-song.mp3') }}" loop></audio>
+  <button id="music-toggle" type="button" title="Bật/tắt nhạc nền">🔇</button>
+
+  <script src="{{ url_for('static', filename='js/effects.js') }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Chọn hoạt động{% endblock %}
+
+{% block content %}
+<div class="card center">
+  <h1 class="title">💭 Mình sẽ làm gì nhỉ?</h1>
+  <p class="question">Chọn hoạt động {{ config.girl_name }} thích nhất</p>
+
+  <form method="post" class="option-grid">
+    {% for activity in config.activities %}
+    <label class="option-card option-card-emoji">
+      <input type="radio" name="activity" value="{{ activity.id }}" required>
+      <span class="emoji">{{ activity.emoji }}</span>
+      <span>{{ activity.label }}</span>
+    </label>
+    {% endfor %}
+
+    <button type="submit" class="btn btn-yes btn-wide">Xác nhận 💕</button>
+  </form>
+</div>
+{% endblock %}
