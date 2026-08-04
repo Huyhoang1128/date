@@ -12,10 +12,10 @@
   }
 
   document.getElementById("question-title").textContent =
-    `💌 ${CONFIG.yourName} có một điều muốn hỏi ${CONFIG.girlName}...`;
+    `${CONFIG.yourName} có một điều muốn hỏi ${CONFIG.girlName}...`;
   document.getElementById("question-text").textContent = CONFIG.question;
   document.getElementById("datetime-text").textContent =
-    `Chọn ngày giờ ${CONFIG.girlName} rảnh nhé`;
+    `Em muốn buổi hẹn diễn ra vào thời gian nào?`;
   document.getElementById("activity-text").textContent =
     `Chọn hoạt động ${CONFIG.girlName} thích nhất`;
   document.getElementById("result-text").textContent =
