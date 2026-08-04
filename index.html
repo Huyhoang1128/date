@@ -34,7 +34,16 @@
         <h1 class="title">💭 Em muốn sau khi đi ăn xong thì mình sẽ đi đâu tiếp theo?</h1>
         <form id="form-activity" class="activity-form">
           <div id="activity-grid" class="option-grid"></div>
-          <input type="text" id="input-activity-other" class="datetime-input other-activity-input" placeholder="Nhập hoạt động bạn muốn...">
+          <input type="text" id="input-activity-other" class="datetime-input other-activity-input" placeholder="Nhập hoạt động em muốn...">
+          <button type="submit" class="btn btn-yes btn-wide">Xác nhận 💕</button>
+        </form>
+      </div>
+
+      <div id="view-notes" class="view">
+        <h1 class="title">📝 Em có muốn thêm gì hay yêu cầu gì không?</h1>
+        <p class="question">Không bắt buộc, cứ để trống nếu không có nhé</p>
+        <form id="form-notes" class="datetime-form">
+          <textarea id="input-notes" class="datetime-input notes-input" rows="3" placeholder="VD: em muốn đi quán yên tĩnh, em không ăn cay..."></textarea>
           <button type="submit" class="btn btn-yes btn-wide">Xác nhận 💕</button>
         </form>
       </div>
@@ -45,6 +54,7 @@
         <div class="summary">
           <p><strong>🕒 Thời gian:</strong> <span id="result-datetime"></span></p>
           <p><strong id="result-activity-emoji"></strong> <span id="result-activity-label"></span></p>
+          <p id="result-notes-row"><strong>📝 Yêu cầu thêm:</strong> <span id="result-notes"></span></p>
         </div>
         <p class="thanks" id="result-thanks"></p>
       </div>

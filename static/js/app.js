@@ -3,6 +3,7 @@
     question: document.getElementById("view-question"),
     datetime: document.getElementById("view-datetime"),
     activity: document.getElementById("view-activity"),
+    notes: document.getElementById("view-notes"),
     result: document.getElementById("view-result"),
   };
 
@@ -37,7 +38,7 @@
     activityGrid.appendChild(label);
   });
 
-  const answer = { datetime: "", activityId: "", activityLabel: "" };
+  const answer = { datetime: "", activityId: "", activityLabel: "", notes: "" };
 
   document.getElementById("btn-yes").addEventListener("click", () => {
     showView("datetime");
@@ -57,9 +58,19 @@
     answer.activityId = activity.id;
     answer.activityLabel = activity.custom ? otherInput.value.trim() : activity.label;
 
+    showView("notes");
+  });
+
+  document.getElementById("form-notes").addEventListener("submit", (e) => {
+    e.preventDefault();
+    answer.notes = document.getElementById("input-notes").value.trim();
+
     document.getElementById("result-datetime").textContent = answer.datetime;
-    document.getElementById("result-activity-emoji").textContent = activity.emoji;
+    document.getElementById("result-activity-emoji").textContent =
+      CONFIG.activities.find((a) => a.id === answer.activityId).emoji;
     document.getElementById("result-activity-label").textContent = answer.activityLabel;
+    document.getElementById("result-notes-row").style.display = answer.notes ? "" : "none";
+    document.getElementById("result-notes").textContent = answer.notes;
 
     submitAnswer(answer);
     showView("result");
@@ -74,6 +85,7 @@
       body: new URLSearchParams({
         datetime: data.datetime,
         activity: data.activityLabel,
+        notes: data.notes,
       }),
     }).catch(() => {});
   }

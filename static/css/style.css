@@ -169,6 +169,11 @@ html, body {
   border-color: #db2777;
 }
 
+.notes-input {
+  resize: vertical;
+  font-family: inherit;
+}
+
 .summary {
   background: #fdf2f8;
   border-radius: 16px;

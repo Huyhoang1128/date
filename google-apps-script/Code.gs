@@ -4,6 +4,7 @@ function doPost(e) {
     new Date(),
     e.parameter.datetime || "",
     e.parameter.activity || "",
+    e.parameter.notes || "",
   ]);
   return ContentService.createTextOutput("OK");
 }
