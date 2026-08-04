@@ -170,6 +170,14 @@ html, body {
   margin-bottom: 20px;
 }
 
+.view {
+  display: none;
+}
+
+.view.active {
+  display: block;
+}
+
 #music-toggle {
   position: fixed;
   bottom: 16px;

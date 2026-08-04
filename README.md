@@ -1,26 +1,31 @@
 # Trang mời hẹn hò 💌
 
-Web app Flask lấy cảm hứng từ video tỏ tình của CodeGymVietnam: hỏi một câu hỏi,
-nút "Không" né chuột, hiệu ứng trái tim/confetti, đếm ngược, sau đó chọn khung giờ
-và hoạt động mong muốn.
+Web tĩnh (HTML/CSS/JS thuần) lấy cảm hứng từ video tỏ tình của CodeGymVietnam:
+hỏi một câu hỏi, nút "Không" né chuột, hiệu ứng trái tim/confetti, sau đó chọn
+ngày giờ và hoạt động mong muốn. Không cần server, chạy được trực tiếp bằng
+GitHub Pages.
 
-## Cài đặt
+## Chạy thử ở máy local
+
+Mở thẳng file `index.html` bằng trình duyệt, hoặc chạy 1 server tĩnh đơn giản:
 
 ```bash
-pip install -r requirements.txt
-cp config.example.py config.py   # rồi sửa nội dung riêng của bạn
-python app.py
+python -m http.server 8000
 ```
 
-Mở trình duyệt tại `http://127.0.0.1:5000`
+rồi mở `http://127.0.0.1:8000`.
 
-## Tuỳ chỉnh
+## Tuỳ chỉnh nội dung
 
-Sửa các giá trị trong `CONFIG` ở file `config.py` (file này không được đưa lên
-Git — xem `config.example.py` để biết cấu trúc mẫu):
+Sửa các giá trị trong [static/js/config.js](static/js/config.js):
 
-- `your_name`, `girl_name`, `question`: nội dung lời mời
-- `activities`: danh sách hoạt động để lựa chọn ở bước 3
+- `yourName`, `girlName`, `question`: nội dung lời mời
+- `activities`: danh sách hoạt động để lựa chọn ở bước cuối
+- `scriptUrl`: URL Web app của Google Apps Script để ghi lại câu trả lời (xem
+  bên dưới), để trống nếu không cần ghi lại
+
+⚠️ Vì đây là trang tĩnh, mọi nội dung trong `config.js` đều công khai (ai xem
+mã nguồn trang cũng thấy được), không có gì được giấu ở backend.
 
 ## Nhạc nền
 
@@ -28,25 +33,33 @@ Git — xem `config.example.py` để biết cấu trúc mẫu):
 `static/audio/README.txt`). Trình duyệt chặn tự động phát nhạc có âm thanh nên
 người dùng cần bấm nút 🔇 ở góc phải để bật nhạc.
 
-## Luồng trang
+## Ghi lại câu trả lời bằng Google Sheets
 
-1. `/` — Câu hỏi mời hẹn hò, nút "Không" né chuột
-2. `/step2` — Chọn ngày giờ (date/time picker)
-3. `/step3` — Chọn hoạt động
-4. `/result` — Xác nhận + hiệu ứng ăn mừng
+1. Tạo một Google Sheet mới.
+2. Vào **Extensions → Apps Script**, xoá code mẫu, dán nội dung file
+   [google-apps-script/Code.gs](google-apps-script/Code.gs) vào.
+3. Bấm **Deploy → New deployment** → chọn loại **Web app**:
+   - Execute as: **Me**
+   - Who has access: **Anyone**
+4. Bấm **Deploy**, copy URL Web app được cấp.
+5. Dán URL đó vào `scriptUrl` trong `static/js/config.js`.
 
-## Deploy lên Render
+Mỗi khi có người hoàn thành form, một dòng mới (thời gian, ngày giờ hẹn, hoạt
+động) sẽ tự động được thêm vào Google Sheet.
 
-`config.py` không được đưa lên Git (chứa nội dung cá nhân), nên khi deploy cần
-tạo biến môi trường tương ứng — cách đơn giản nhất là commit tạm nội dung
-`config.py` thật vào một nhánh/repo riêng tư, hoặc set nội dung qua biến môi
-trường nếu bạn sửa `app.py` để đọc từ đó.
+## Deploy bằng GitHub Pages
 
-1. Đẩy repo (đã ẩn `config.py`) lên GitHub.
-2. Vào [render.com](https://render.com) → New → Blueprint → chọn repo này.
-   Render sẽ tự đọc `render.yaml` và cấu hình sẵn `gunicorn app:app`.
-3. Trên Render, vào tab Environment và thêm nội dung `config.py` bằng cách:
-   thêm file `config.py` trực tiếp trong repo deploy riêng (private), hoặc
-   dùng Secret Files của Render để upload file `config.py` lên server.
-4. Sau khi deploy xong, Render cung cấp một URL public dạng
-   `https://ten-app.onrender.com` — gửi link này để mọi người xem được.
+1. Đẩy repo lên GitHub — **repo phải để Public** thì GitHub Pages miễn phí mới
+   chạy được (Settings → General → Danger Zone → Change visibility).
+2. Vào **Settings → Pages** → Source: chọn **Deploy from a branch** → Branch:
+   `main`, folder `/ (root)` → **Save**.
+3. Sau vài phút, GitHub cấp một URL dạng
+   `https://<username>.github.io/<repo>/` — gửi link này để mọi người xem
+   được.
+
+## Luồng trang (single-page, chuyển view bằng JS)
+
+1. Câu hỏi mời hẹn hò, nút "Không" né chuột
+2. Chọn ngày giờ (nhập tự do)
+3. Chọn hoạt động
+4. Xác nhận + hiệu ứng ăn mừng, gửi dữ liệu về Google Sheets (nếu đã cấu hình)
