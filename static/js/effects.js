@@ -110,14 +110,28 @@
   const music = document.getElementById("bg-music");
   const musicToggle = document.getElementById("music-toggle");
   if (music && musicToggle) {
+    music.addEventListener("play", () => (musicToggle.textContent = "🔊"));
+    music.addEventListener("pause", () => (musicToggle.textContent = "🔇"));
+
     musicToggle.addEventListener("click", () => {
       if (music.paused) {
         music.play().catch(() => {});
-        musicToggle.textContent = "🔊";
       } else {
         music.pause();
-        musicToggle.textContent = "🔇";
       }
+    });
+
+    // Trình duyệt thường chặn tự động phát có âm thanh cho tới khi người
+    // dùng tương tác với trang, nên vừa thử autoplay vừa bắt lần tương tác
+    // đầu tiên để phát nhạc ngay khi có thể.
+    music.play().catch(() => {
+      const startOnFirstInteraction = () => {
+        music.play().catch(() => {});
+        document.removeEventListener("click", startOnFirstInteraction);
+        document.removeEventListener("touchstart", startOnFirstInteraction);
+      };
+      document.addEventListener("click", startOnFirstInteraction);
+      document.addEventListener("touchstart", startOnFirstInteraction);
     });
   }
 })();

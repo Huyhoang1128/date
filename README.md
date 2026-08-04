@@ -26,8 +26,10 @@ mã nguồn trang cũng thấy được), không có gì được giấu ở bac
 ## Nhạc nền
 
 Đặt file mp3 của bạn vào `static/audio/love-song.mp3` (xem
-`static/audio/README.txt`). Trình duyệt chặn tự động phát nhạc có âm thanh nên
-người dùng cần bấm nút 🔇 ở góc phải để bật nhạc.
+`static/audio/README.txt`). Trang tự thử phát nhạc ngay khi mở; nếu trình
+duyệt chặn autoplay có âm thanh, nhạc sẽ tự bật ngay khi người dùng chạm/bấm
+vào bất kỳ đâu trên trang lần đầu tiên. Nút 🔊/🔇 ở góc phải để bật/tắt thủ
+công bất cứ lúc nào.
 
 ## Ghi lại câu trả lời bằng Google Sheets
 
