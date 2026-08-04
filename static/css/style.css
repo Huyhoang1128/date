@@ -102,10 +102,24 @@ html, body {
   margin-top: 12px;
 }
 
+.activity-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
 .option-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
+}
+
+.other-activity-input {
+  display: none;
+}
+
+.other-activity-input.active {
+  display: block;
 }
 
 .option-card {

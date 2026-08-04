@@ -16,14 +16,12 @@
   document.getElementById("question-text").textContent = CONFIG.question;
   document.getElementById("datetime-text").textContent =
     `Em muốn buổi hẹn diễn ra vào thời gian nào?`;
-  document.getElementById("activity-text").textContent =
-    `Chọn hoạt động ${CONFIG.girlName} thích nhất`;
   document.getElementById("result-text").textContent =
     `${CONFIG.girlName} đã đồng ý hẹn hò với ${CONFIG.yourName}!`;
   document.getElementById("result-thanks").textContent = `Hẹn gặp ${CONFIG.girlName} nhé! 💖`;
 
-  const activityForm = document.getElementById("form-activity");
-  const submitButton = activityForm.querySelector("button");
+  const activityGrid = document.getElementById("activity-grid");
+  const otherInput = document.getElementById("input-activity-other");
   CONFIG.activities.forEach((activity) => {
     const label = document.createElement("label");
     label.className = "option-card option-card-emoji";
@@ -32,7 +30,11 @@
       <span class="emoji">${activity.emoji}</span>
       <span>${activity.label}</span>
     `;
-    activityForm.insertBefore(label, submitButton);
+    label.querySelector("input").addEventListener("change", () => {
+      otherInput.classList.toggle("active", !!activity.custom);
+      otherInput.required = !!activity.custom;
+    });
+    activityGrid.appendChild(label);
   });
 
   const answer = { datetime: "", activityId: "", activityLabel: "" };
@@ -53,11 +55,11 @@
     if (!selected) return;
     const activity = CONFIG.activities.find((a) => a.id === selected.value);
     answer.activityId = activity.id;
-    answer.activityLabel = activity.label;
+    answer.activityLabel = activity.custom ? otherInput.value.trim() : activity.label;
 
     document.getElementById("result-datetime").textContent = answer.datetime;
     document.getElementById("result-activity-emoji").textContent = activity.emoji;
-    document.getElementById("result-activity-label").textContent = activity.label;
+    document.getElementById("result-activity-label").textContent = answer.activityLabel;
 
     submitAnswer(answer);
     showView("result");
