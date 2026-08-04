@@ -18,8 +18,8 @@
   document.getElementById("datetime-text").textContent =
     `Em muốn buổi hẹn diễn ra vào thời gian nào?`;
   document.getElementById("result-text").textContent =
-    `${CONFIG.girlName} đã đồng ý hẹn hò với ${CONFIG.yourName}!`;
-  document.getElementById("result-thanks").textContent = `Hẹn gặp ${CONFIG.girlName} nhé! 💖`;
+    `abcdef`;
+  document.getElementById("result-thanks").textContent = `efgh`;
 
   const activityGrid = document.getElementById("activity-grid");
   const otherInput = document.getElementById("input-activity-other");
