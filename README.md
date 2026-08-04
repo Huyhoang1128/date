@@ -1,9 +1,5 @@
 # Trang mời hẹn hò 💌
 
-Web tĩnh (HTML/CSS/JS thuần) lấy cảm hứng từ video tỏ tình của CodeGymVietnam:
-hỏi một câu hỏi, nút "Không" né chuột, hiệu ứng trái tim/confetti, sau đó chọn
-ngày giờ và hoạt động mong muốn. Không cần server, chạy được trực tiếp bằng
-GitHub Pages.
 
 ## Chạy thử ở máy local
 
