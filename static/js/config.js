@@ -14,5 +14,5 @@ const CONFIG = {
   ],
   // Dán Web app URL của Google Apps Script vào đây sau khi deploy (xem README.md).
   // Để trống nếu không cần ghi lại câu trả lời.
-  scriptUrl: "",
+  scriptUrl: "https://script.google.com/macros/s/AKfycbyC-qOu7a35EBfR6UjJ_TSdV4-8Ee2X84WpBVs3QuAf42akSI69te1hJycjRFGx_Xpj/exec",
 };
