@@ -1,7 +1,8 @@
 (function () {
   const views = {
     question: document.getElementById("view-question"),
-    datetime: document.getElementById("view-datetime"),
+    guest: document.getElementById("view-guest"),
+    restaurant: document.getElementById("view-restaurant"),
     activity: document.getElementById("view-activity"),
     notes: document.getElementById("view-notes"),
     result: document.getElementById("view-result"),
@@ -13,14 +14,84 @@
   }
 
   document.getElementById("question-title").textContent =
-    `${CONFIG.yourName} có một điều muốn hỏi ${CONFIG.girlName}...`;
+    `🎂 ${CONFIG.hostName} sắp sinh nhật rồi!`;
   document.getElementById("question-text").textContent = CONFIG.question;
-  document.getElementById("datetime-text").textContent =
-    `Em muốn buổi hẹn diễn ra vào thời gian nào?`;
-  document.getElementById("result-text").textContent =
-    `abcdef`;
-  document.getElementById("result-thanks").textContent = `efgh`;
+  document.querySelectorAll(".party-time").forEach((el) => (el.textContent = CONFIG.partyTime));
+  document.getElementById("result-thanks").textContent =
+    "Mình sẽ chốt quán được chọn nhiều nhất rồi báo lại cả nhóm nha 🎂";
 
+  // ---------------------------------------------------------------------
+  // Nhà hàng: gợi ý sẵn trong config + các quán khách trước đã gửi lên
+  // ---------------------------------------------------------------------
+  const restaurantList = document.getElementById("restaurant-list");
+  const restaurantStatus = document.getElementById("restaurant-status");
+  const otherRestaurantInput = document.getElementById("input-restaurant-other");
+
+  function normalizeName(name) {
+    return name.trim().toLowerCase().replace(/\s+/g, " ");
+  }
+
+  function renderRestaurants(suggested) {
+    const all = [...suggested];
+    CONFIG.restaurants.forEach((name) => {
+      if (!all.some((r) => normalizeName(r.name) === normalizeName(name))) all.push({ name, votes: 0 });
+    });
+
+    restaurantStatus.textContent = all.length
+      ? "Chọn một quán mọi người đã gợi ý, hoặc góp ý quán mới nhé"
+      : "Chưa có ai gợi ý, bạn là người đầu tiên đó!";
+
+    restaurantList.replaceChildren(
+      ...all.map((r) => restaurantOption(r.name, r.votes, false)),
+      restaurantOption("➕ Gợi ý quán khác", 0, true),
+    );
+  }
+
+  function restaurantOption(name, votes, custom) {
+    const label = document.createElement("label");
+    label.className = "option-card option-row";
+
+    const input = document.createElement("input");
+    input.type = "radio";
+    input.name = "restaurant";
+    input.value = name;
+    input.required = true;
+    if (custom) input.dataset.custom = "1";
+    input.addEventListener("change", () => {
+      otherRestaurantInput.classList.toggle("active", custom);
+      otherRestaurantInput.required = custom;
+    });
+
+    // Tên quán do khách nhập nên luôn gán bằng textContent, không dùng innerHTML
+    const text = document.createElement("span");
+    text.className = "option-name";
+    text.textContent = name;
+    label.append(input, text);
+
+    if (votes) {
+      const badge = document.createElement("span");
+      badge.className = "vote-count";
+      badge.textContent = `${votes} phiếu`;
+      label.appendChild(badge);
+    }
+    return label;
+  }
+
+  if (CONFIG.scriptUrl) {
+    fetch(CONFIG.scriptUrl)
+      .then((res) => res.json())
+      .then((data) => renderRestaurants(data.restaurants || []))
+      .catch(() => {
+        renderRestaurants([]);
+        restaurantStatus.textContent = "Không tải được gợi ý của mọi người, bạn cứ gợi ý quán mới nhé";
+      });
+  } else {
+    renderRestaurants([]);
+  }
+
+  // ---------------------------------------------------------------------
+  // Hoạt động sau tiệc
+  // ---------------------------------------------------------------------
   const activityGrid = document.getElementById("activity-grid");
   const otherInput = document.getElementById("input-activity-other");
   CONFIG.activities.forEach((activity) => {
@@ -38,15 +109,24 @@
     activityGrid.appendChild(label);
   });
 
-  const answer = { datetime: "", activityId: "", activityLabel: "", notes: "" };
+  const answer = { name: "", guests: "", restaurant: "", activityId: "", activityLabel: "", notes: "" };
 
   document.getElementById("btn-yes").addEventListener("click", () => {
-    showView("datetime");
+    showView("guest");
   });
 
-  document.getElementById("form-datetime").addEventListener("submit", (e) => {
+  document.getElementById("form-guest").addEventListener("submit", (e) => {
     e.preventDefault();
-    answer.datetime = document.getElementById("input-datetime").value.trim();
+    answer.name = document.getElementById("input-name").value.trim();
+    answer.guests = document.getElementById("input-guests").value;
+    showView("restaurant");
+  });
+
+  document.getElementById("form-restaurant").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const selected = document.querySelector('input[name="restaurant"]:checked');
+    if (!selected) return;
+    answer.restaurant = selected.dataset.custom ? otherRestaurantInput.value.trim() : selected.value;
     showView("activity");
   });
 
@@ -65,7 +145,10 @@
     e.preventDefault();
     answer.notes = document.getElementById("input-notes").value.trim();
 
-    document.getElementById("result-datetime").textContent = answer.datetime;
+    document.getElementById("result-text").textContent =
+      `Cảm ơn ${answer.name} nhé, hẹn gặp bạn ở bữa tiệc!`;
+    document.getElementById("result-restaurant").textContent = answer.restaurant;
+    document.getElementById("result-guests").textContent = answer.guests;
     document.getElementById("result-activity-emoji").textContent =
       CONFIG.activities.find((a) => a.id === answer.activityId).emoji;
     document.getElementById("result-activity-label").textContent = answer.activityLabel;
@@ -83,7 +166,9 @@
       method: "POST",
       mode: "no-cors",
       body: new URLSearchParams({
-        datetime: data.datetime,
+        name: data.name,
+        guests: data.guests,
+        restaurant: data.restaurant,
         activity: data.activityLabel,
         notes: data.notes,
       }),

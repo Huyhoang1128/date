@@ -6,7 +6,7 @@ html, body {
   margin: 0;
   min-height: 100%;
   font-family: "Segoe UI", Tahoma, sans-serif;
-  background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fbc2eb 100%);
+  background: linear-gradient(135deg, #fde68a 0%, #fbcfe8 50%, #c4b5fd 100%);
   overflow-x: hidden;
 }
 
@@ -35,7 +35,7 @@ html, body {
   padding: 40px 32px;
   max-width: 480px;
   width: 100%;
-  box-shadow: 0 20px 60px rgba(219, 39, 119, 0.25);
+  box-shadow: 0 20px 60px rgba(124, 58, 237, 0.25);
   text-align: center;
   animation: pop-in 0.4s ease-out;
 }
@@ -47,13 +47,13 @@ html, body {
 
 .title {
   font-size: 1.5rem;
-  color: #be185d;
+  color: #7c3aed;
   margin-bottom: 8px;
 }
 
 .question {
   font-size: 1.1rem;
-  color: #6b21a8;
+  color: #4c1d95;
   margin-bottom: 24px;
 }
 
@@ -82,7 +82,7 @@ html, body {
 }
 
 .btn-yes {
-  background: linear-gradient(135deg, #f472b6, #db2777);
+  background: linear-gradient(135deg, #ea580c, #db2777);
   color: white;
 }
 
@@ -102,23 +102,23 @@ html, body {
   margin-top: 12px;
 }
 
-.activity-form {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
 .option-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
 }
 
-.other-activity-input {
+.option-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.other-input {
   display: none;
 }
 
-.other-activity-input.active {
+.other-input.active {
   display: block;
 }
 
@@ -128,45 +128,77 @@ html, body {
   align-items: center;
   gap: 6px;
   padding: 16px 8px;
-  border: 2px solid #fbcfe8;
+  border: 2px solid #ddd6fe;
   border-radius: 16px;
   cursor: pointer;
   font-size: 0.95rem;
-  color: #831843;
+  color: #4c1d95;
   transition: border-color 0.15s ease, background 0.15s ease;
 }
 
 .option-card:has(input:checked) {
-  border-color: #db2777;
-  background: #fdf2f8;
+  border-color: #7c3aed;
+  background: #f5f3ff;
 }
 
 .option-card input {
-  accent-color: #db2777;
+  accent-color: #7c3aed;
 }
 
 .option-card-emoji .emoji {
   font-size: 1.6rem;
 }
 
-.datetime-form {
+.option-row {
+  flex-direction: row;
+  gap: 10px;
+  padding: 12px 14px;
+  text-align: left;
+}
+
+.option-name {
+  overflow-wrap: anywhere;
+}
+
+.vote-count {
+  margin-left: auto;
+  flex-shrink: 0;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: #ede9fe;
+  color: #6d28d9;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.stack-form {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-.datetime-input {
-  padding: 14px 16px;
-  border: 2px solid #fbcfe8;
-  border-radius: 16px;
-  font-size: 1rem;
-  color: #831843;
-  background: #fdf2f8;
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #4c1d95;
 }
 
-.datetime-input:focus {
+.text-input {
+  padding: 14px 16px;
+  border: 2px solid #ddd6fe;
+  border-radius: 16px;
+  font-size: 1rem;
+  color: #4c1d95;
+  background: #f5f3ff;
+}
+
+.text-input:focus {
   outline: none;
-  border-color: #db2777;
+  border-color: #7c3aed;
 }
 
 .notes-input {
@@ -175,16 +207,16 @@ html, body {
 }
 
 .summary {
-  background: #fdf2f8;
+  background: #f5f3ff;
   border-radius: 16px;
   padding: 16px;
   margin-bottom: 16px;
   text-align: left;
-  color: #831843;
+  color: #4c1d95;
 }
 
 .thanks {
-  color: #be185d;
+  color: #7c3aed;
   font-weight: 600;
   margin-bottom: 20px;
 }

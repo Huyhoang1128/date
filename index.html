@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Lời mời hẹn hò</title>
+  <title>Mời dự sinh nhật</title>
   <link rel="stylesheet" href="static/css/style.css">
 </head>
 <body>
@@ -14,47 +14,70 @@
 
       <div id="view-question" class="view active">
         <h1 class="title" id="question-title"></h1>
+        <div class="summary">
+          <p><strong>🕒 Thời gian:</strong> <span class="party-time"></span></p>
+          <p><strong>📍 Địa điểm:</strong> cả nhóm cùng chọn ở bước sau 😉</p>
+        </div>
         <p class="question" id="question-text"></p>
         <div class="buttons">
-          <button type="button" id="btn-yes" class="btn btn-yes">Có 💖</button>
-          <button type="button" id="btn-no" class="btn btn-no">Không</button>
+          <button type="button" id="btn-yes" class="btn btn-yes">Đi chứ! 🎉</button>
+          <button type="button" id="btn-no" class="btn btn-no">Bận rồi</button>
         </div>
       </div>
 
-      <div id="view-datetime" class="view">
-        <h1 class="title">Để buổi hẹn có thể diễn ra 1 cách thuận lợi, em giúp anh hoàn thiện những thông tin này nhé.</h1>
-        <p class="question" id="datetime-text"></p>
-        <form id="form-datetime" class="datetime-form">
-          <input type="text" id="input-datetime" class="datetime-input" placeholder="VD: Thứ 7, 20/09/2026 lúc 19:00" required>
+      <div id="view-guest" class="view">
+        <h1 class="title">📋 Điền giúp mình chút thông tin để mình chuẩn bị chu đáo nhé!</h1>
+        <form id="form-guest" class="stack-form">
+          <label class="field">
+            <span>Tên của bạn</span>
+            <input type="text" id="input-name" class="text-input" placeholder="VD: Minh Anh" required>
+          </label>
+          <label class="field">
+            <span>Số người đi (tính cả bạn)</span>
+            <input type="number" id="input-guests" class="text-input" min="1" max="20" value="1" required>
+          </label>
+          <button type="submit" class="btn btn-yes btn-wide">Tiếp theo →</button>
+        </form>
+      </div>
+
+      <div id="view-restaurant" class="view">
+        <h1 class="title">🍽️ Mình nên đi ăn ở đâu nhỉ?</h1>
+        <p class="question" id="restaurant-status">Đang tải gợi ý của mọi người...</p>
+        <form id="form-restaurant" class="stack-form">
+          <div id="restaurant-list" class="option-list"></div>
+          <input type="text" id="input-restaurant-other" class="text-input other-input" maxlength="80" placeholder="VD: Lẩu Phan, 123 Cầu Giấy">
           <button type="submit" class="btn btn-yes btn-wide">Tiếp theo →</button>
         </form>
       </div>
 
       <div id="view-activity" class="view">
-        <h1 class="title">💭 Em muốn sau khi đi ăn xong thì mình sẽ đi đâu tiếp theo?</h1>
-        <form id="form-activity" class="activity-form">
+        <h1 class="title">🎈 Ăn uống, thổi nến xong mình quẩy tiếp gì nhỉ?</h1>
+        <p class="question">Chọn cái bạn thích nhất, mình sẽ chốt theo số đông</p>
+        <form id="form-activity" class="stack-form">
           <div id="activity-grid" class="option-grid"></div>
-          <input type="text" id="input-activity-other" class="datetime-input other-activity-input" placeholder="Nhập hoạt động em muốn...">
-          <button type="submit" class="btn btn-yes btn-wide">Xác nhận 💕</button>
+          <input type="text" id="input-activity-other" class="text-input other-input" placeholder="Nhập hoạt động bạn muốn...">
+          <button type="submit" class="btn btn-yes btn-wide">Xác nhận 🎉</button>
         </form>
       </div>
 
       <div id="view-notes" class="view">
-        <h1 class="title">📝 Em có muốn thêm gì hay yêu cầu gì không?</h1>
+        <h1 class="title">💌 Bạn có lời chúc hay lưu ý gì cho mình không?</h1>
         <p class="question">Không bắt buộc, cứ để trống nếu không có nhé</p>
-        <form id="form-notes" class="datetime-form">
-          <textarea id="input-notes" class="datetime-input notes-input" rows="3" placeholder="VD: em muốn đi quán yên tĩnh, em không ăn cay..."></textarea>
-          <button type="submit" class="btn btn-yes btn-wide">Xác nhận 💕</button>
+        <form id="form-notes" class="stack-form">
+          <textarea id="input-notes" class="text-input notes-input" rows="3" placeholder="VD: chúc mừng sinh nhật! / mình ăn chay, không ăn được hải sản..."></textarea>
+          <button type="submit" class="btn btn-yes btn-wide">Gửi xác nhận 🎂</button>
         </form>
       </div>
 
       <div id="view-result" class="view">
-        <h1 class="title"> Tuyệt vời!</h1>
+        <h1 class="title">🥳 Tuyệt vời!</h1>
         <p class="question" id="result-text"></p>
         <div class="summary">
-          <p><strong>🕒 Thời gian:</strong> <span id="result-datetime"></span></p>
+          <p><strong>🕒 Thời gian:</strong> <span class="party-time"></span></p>
+          <p><strong>🍽️ Nhà hàng bạn chọn:</strong> <span id="result-restaurant"></span></p>
+          <p><strong>👥 Số người:</strong> <span id="result-guests"></span></p>
           <p><strong id="result-activity-emoji"></strong> <span id="result-activity-label"></span></p>
-          <p id="result-notes-row"><strong>📝 Yêu cầu thêm:</strong> <span id="result-notes"></span></p>
+          <p id="result-notes-row"><strong>💌 Lời nhắn:</strong> <span id="result-notes"></span></p>
         </div>
         <p class="thanks" id="result-thanks"></p>
       </div>
@@ -62,7 +85,7 @@
     </div>
   </div>
 
-  <audio id="bg-music" src="static/audio/love-song.mp3" loop autoplay></audio>
+  <audio id="bg-music" src="static/audio/bg-music.mp3" loop autoplay></audio>
   <button id="music-toggle" type="button" title="Bật/tắt nhạc nền">🔇</button>
 
   <script src="static/js/config.js"></script>

@@ -11,32 +11,53 @@
   resize();
 
   // ---------------------------------------------------------------------
-  // Trái tim bay lơ lửng nền
+  // Bóng bay lơ lửng nền
   // ---------------------------------------------------------------------
-  const hearts = Array.from({ length: 18 }, spawnHeart);
+  const balloonColors = ["#f472b6", "#facc15", "#60a5fa", "#34d399", "#a78bfa", "#fb923c"];
+  const balloons = Array.from({ length: 18 }, spawnBalloon);
 
-  function spawnHeart() {
+  function spawnBalloon() {
     return {
       x: Math.random() * width,
       y: height + Math.random() * height,
-      size: 10 + Math.random() * 18,
+      size: 16 + Math.random() * 18,
       speed: 0.4 + Math.random() * 0.8,
       drift: (Math.random() - 0.5) * 0.6,
-      opacity: 0.3 + Math.random() * 0.4,
+      opacity: 0.4 + Math.random() * 0.35,
+      color: balloonColors[Math.floor(Math.random() * balloonColors.length)],
     };
   }
 
-  function drawHeart(x, y, size, opacity) {
+  function drawBalloon(b) {
+    const rx = b.size / 2;
+    const ry = b.size * 0.62;
     ctx.save();
-    ctx.globalAlpha = opacity;
-    ctx.fillStyle = "#f472b6";
+    ctx.globalAlpha = b.opacity;
+
+    // Dây bóng
+    ctx.strokeStyle = "rgba(76, 29, 149, 0.4)";
+    ctx.lineWidth = 1;
     ctx.beginPath();
-    const topCurveHeight = size * 0.3;
-    ctx.moveTo(x, y + topCurveHeight);
-    ctx.bezierCurveTo(x, y, x - size / 2, y, x - size / 2, y + topCurveHeight);
-    ctx.bezierCurveTo(x - size / 2, y + (size + topCurveHeight) / 2, x, y + (size + topCurveHeight) / 1.4, x, y + size);
-    ctx.bezierCurveTo(x, y + (size + topCurveHeight) / 1.4, x + size / 2, y + (size + topCurveHeight) / 2, x + size / 2, y + topCurveHeight);
-    ctx.bezierCurveTo(x + size / 2, y, x, y, x, y + topCurveHeight);
+    ctx.moveTo(b.x, b.y + ry);
+    ctx.quadraticCurveTo(b.x - rx * 0.6, b.y + ry + b.size * 0.6, b.x, b.y + ry + b.size * 1.2);
+    ctx.stroke();
+
+    // Thân bóng + nút thắt
+    ctx.fillStyle = b.color;
+    ctx.beginPath();
+    ctx.ellipse(b.x, b.y, rx, ry, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(b.x, b.y + ry - 1);
+    ctx.lineTo(b.x - rx * 0.25, b.y + ry + rx * 0.35);
+    ctx.lineTo(b.x + rx * 0.25, b.y + ry + rx * 0.35);
+    ctx.closePath();
+    ctx.fill();
+
+    // Điểm sáng
+    ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
+    ctx.beginPath();
+    ctx.ellipse(b.x - rx * 0.35, b.y - ry * 0.35, rx * 0.2, ry * 0.25, -0.5, 0, Math.PI * 2);
     ctx.fill();
     ctx.restore();
   }
@@ -77,11 +98,11 @@
   function tick() {
     ctx.clearRect(0, 0, width, height);
 
-    hearts.forEach((h) => {
-      h.y -= h.speed;
-      h.x += h.drift;
-      if (h.y < -20) Object.assign(h, spawnHeart(), { y: height + 20 });
-      drawHeart(h.x, h.y, h.size, h.opacity);
+    balloons.forEach((b) => {
+      b.y -= b.speed;
+      b.x += b.drift;
+      if (b.y < -b.size * 2) Object.assign(b, spawnBalloon(), { y: height + 20 });
+      drawBalloon(b);
     });
 
     confetti = confetti.filter((c) => c.life < 150);
