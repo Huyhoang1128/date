@@ -15,11 +15,14 @@ rồi mở `http://127.0.0.1:8000`.
 Sửa các giá trị trong [static/js/config.js](static/js/config.js):
 
 - `hostName`: tên chủ tiệc (người có sinh nhật)
-- `partyTime`: thời gian bữa tiệc
+- `partyDate`: thời điểm bắt đầu tiệc theo giờ Việt Nam, dạng
+  `"2026-11-24T18:30"`. Trang tự hiện thứ/ngày/giờ, đếm ngược và tạo link
+  thêm vào Google Calendar từ giá trị này
 - `question`: câu mời ở trang đầu
 - `restaurants`: vài nhà hàng gợi ý sẵn (không bắt buộc), quán khách gợi ý
   sẽ tự được thêm vào cho người sau chọn
-- `activities`: danh sách hoạt động sau tiệc để khách bình chọn
+- `activities`: danh sách hoạt động sau tiệc để khách bình chọn, mỗi mục gồm
+  `id`, `emoji`, `label` (thêm `custom: true` cho lựa chọn tự nhập)
 - `scriptUrl`: URL Web app của Google Apps Script để ghi lại câu trả lời (xem
   bên dưới), để trống nếu không cần ghi lại
 
@@ -70,9 +73,13 @@ bút chì → Version: **New version** → **Deploy** để giữ nguyên URL c�
 
 ## Luồng trang (single-page, chuyển view bằng JS)
 
-1. Thiệp mời kèm thời gian; nút "Bận rồi" né chuột
+1. Thiệp mời: bánh kem chạm để thổi nến, ngày giờ, đếm ngược; nút "Bận rồi"
+   né chuột
 2. Nhập tên và số người đi
-3. Chọn nhà hàng mọi người đã gợi ý, hoặc gợi ý quán mới
+3. Chọn nhà hàng mọi người đã gợi ý (kèm số phiếu), hoặc gợi ý quán mới
 4. Bình chọn hoạt động sau tiệc
-5. Lời chúc / lưu ý (không bắt buộc)
-6. Xác nhận + hiệu ứng ăn mừng, gửi dữ liệu về Google Sheets (nếu đã cấu hình)
+5. Lời chúc / lưu ý (không bắt buộc, có sẵn vài câu bấm nhanh)
+6. Vé mời kèm nút thêm vào Google Calendar, pháo giấy ăn mừng, gửi dữ liệu về
+   Google Sheets (nếu đã cấu hình)
+
+Từ bước 2 đến bước 5 có thanh tiến trình và nút quay lại.
