@@ -129,7 +129,7 @@
     const topVotes = Math.max(0, ...all.map((r) => r.votes));
 
     restaurantStatus.textContent = all.length
-      ? "Chọn một quán mọi người đã gợi ý, hoặc góp ý quán mới nhé"
+      ? "Chọn một lựa chọn bên dưới, hoặc gợi ý quán mới nhé"
       : "Chưa có ai gợi ý, bạn là người đầu tiên đó!";
 
     restaurantList.replaceChildren(

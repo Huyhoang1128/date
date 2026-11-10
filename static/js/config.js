@@ -6,7 +6,14 @@ const CONFIG = {
   question: "Bạn đến chung vui cùng mình nhé?",
   // Vài nhà hàng gợi ý sẵn (không bắt buộc). Quán khách gợi ý sẽ tự được
   // thêm vào danh sách cho người sau chọn, cần cấu hình scriptUrl.
-  restaurants: [],
+  restaurants: [
+    "🔥 Nướng",
+    "🍷 Fine-Dining",
+    "🍲 Lẩu",
+    "🍱 Buffet",
+    "🦐 Hải sản",
+    "🍣 Đồ Nhật",
+  ],
   activities: [
     { id: "karaoke", emoji: "🎤", label: "Karaoke" },
     { id: "boardgame", emoji: "🎲", label: "Board game" },
